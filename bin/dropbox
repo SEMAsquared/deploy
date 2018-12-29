@@ -20,7 +20,8 @@ class TransferData:
             if file_size <= CHUNK_SIZE:
                 print(dbx.files_upload(f,read(), file_to, mode=dropbox.files.WriteMode.overwrite))
             else:
-                upload_session_start_result = dbx.files_upload_session_start(f.read(CHUNK_SIZE))
+                upload_session_start_result = dbx.files_upload_session_start(f.read(CHUNK_SIZE),
+                    mode=dropbox.files.WriteMode.overwrite)
                 cursor = dropbox.files.UploadSessionCursor(session_id=upload_session_start_result.session_id,
                                                         offset=f.tell())
                 commit = dropbox.files.CommitInfo(path=file_to)
